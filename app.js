@@ -138,9 +138,10 @@
 		$('#randomSongTitle').html(track.name);
 		$('#randomSongAlbum').html(track.album.name);
 		$('#randomSongArtist').html(track.artists[0].name);
+		
 		$('#randomSongURI').prop('href', track.uri);
 		$('#randomSongPreview').prop('src', track.preview_url);
-		$('#randomSongCover').html('<img src="' + track.album.images[0].url + '" class="img-responsive img-thumbnail" style="width: 320px; height: 320px;" />');
+		$('#randomSongCover').prop('src', track.album.images[0].url);
 	};
 
 	$.getRandomSong = function() {
