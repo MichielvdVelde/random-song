@@ -28,7 +28,9 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div id="randomSongCover" style="text-align: center;"></div>
+              <div style="text-align: center;">
+								<img id="randomSongCover" class="img-responsive img-thumbnail" style="width: 320px; height: 320px;" />
+							</div>
             </div>
           </div>
           <div class="row">
@@ -59,11 +61,23 @@
     <script src="app.js"></script>
 		<script>
 			$(document).ready(function() {
-				$.getRandomSong();
+
+        var displayTrackInfo = function(track) {
+      		$('#randomSongTitle').html(track.name);
+      		$('#randomSongAlbum').html(track.album.name);
+      		$('#randomSongArtist').html(track.artists[0].name);
+
+      		$('#randomSongURI').prop('href', track.uri);
+      		$('#randomSongPreview').prop('src', track.preview_url);
+      		$('#randomSongCover').prop('src', track.album.images[0].url);
+      	};
+
         $('#newGen').click(function(e) {
           e.preventDefault();
-          $.getRandomSong();
-        })
+          $.getRandomSong(displayTrackInfo);
+        });
+
+        $.getRandomSong(displayTrackInfo);
 			});
 		</script>
     <script>

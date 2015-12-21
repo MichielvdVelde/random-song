@@ -134,20 +134,10 @@
 		$.getJSON(url, callback);
 	};
 
-	var displayTrackInfo = function(track) {
-		$('#randomSongTitle').html(track.name);
-		$('#randomSongAlbum').html(track.album.name);
-		$('#randomSongArtist').html(track.artists[0].name);
-		
-		$('#randomSongURI').prop('href', track.uri);
-		$('#randomSongPreview').prop('src', track.preview_url);
-		$('#randomSongCover').prop('src', track.album.images[0].url);
-	};
-
-	$.getRandomSong = function() {
+	$.getRandomSong = function(callback) {
 		doSearch(function(response) {
-			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong();
-			displayTrackInfo(response.tracks.items[0]);
+			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong(callback);
+			return callback(response.tracks.items[0]);
 		});
 	};
 
