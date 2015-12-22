@@ -160,7 +160,7 @@
 		options.words = selectWords(options.maxWords);
 		doSearch(options, function(response) {
 			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong(options, callback);
-			return callback(response.tracks.items[0]);
+			return callback(response.tracks.items[0], options.words);
 		});
 	};
 
