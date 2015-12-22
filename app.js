@@ -112,6 +112,11 @@
 		'Pretending'
 	];
 
+	var defaultOptions = {
+		'maxWords': 3,
+		'maxOffset': 5
+	};
+
 	var selectWords = function(max) {
 		if(!max || isNaN(max) || max < 1) max = 1;
 		var howMany = Math.ceil(Math.random() * max);
@@ -123,20 +128,21 @@
 		return words;
 	};
 
-	var doSearch = function(words, callback) {
-		if(!callback && typeof words == 'function') {
-			callback = words;
-			words = null;
-		}
-		if(!words) words = selectWords(3);
-		var offset = Math.ceil(Math.random() * 5);
+	var doSearch = function(options, callback) {
+		var words = selectWords(options.maxWords);
+		var offset = Math.ceil(Math.random() * options.maxOffset);
 		var url = 'https://api.spotify.com/v1/search?type=track&limit=1&offset=' + offset + '&q=' + words.join('%20');
 		$.getJSON(url, callback);
 	};
 
-	$.getRandomSong = function(callback) {
-		doSearch(function(response) {
-			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong(callback);
+	$.getRandomSong = function(options, callback) {
+		if(!callback && typeof options == 'function') {
+			callback = options;
+			options = {};
+		}
+		options = $.extend(defaultOptions, options);
+		doSearch(options, function(response) {
+			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong(options, callback);
 			return callback(response.tracks.items[0]);
 		});
 	};
