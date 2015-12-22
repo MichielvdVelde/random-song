@@ -1,5 +1,8 @@
 (function($) {
 
+	/**
+	 * Words list to select from
+	*/
 	var wordsList = [
 		'Help',
 		'Love',
@@ -112,11 +115,17 @@
 		'Pretending'
 	];
 
+	/**
+	 * Default options are set here
+	*/
 	var defaultOptions = {
 		'maxWords': 3,
 		'maxOffset': 5
 	};
 
+	/**
+	 * Select 1 to `max` words from the words list
+	*/
 	var selectWords = function(max) {
 		if(!max || isNaN(max) || max < 1) max = 1;
 		var howMany = Math.ceil(Math.random() * max);
@@ -128,6 +137,9 @@
 		return words;
 	};
 
+	/**
+	 * Build and fire request to the Spotify Web API
+	*/
 	var doSearch = function(options, callback) {
 		var words = selectWords(options.maxWords);
 		var offset = Math.ceil(Math.random() * options.maxOffset);
@@ -135,6 +147,9 @@
 		$.getJSON(url, callback);
 	};
 
+	/**
+	 * Get info on a random song from the Spotify Web API
+	*/
 	$.getRandomSong = function(options, callback) {
 		if(!callback && typeof options == 'function') {
 			callback = options;
