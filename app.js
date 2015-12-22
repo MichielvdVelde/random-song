@@ -129,9 +129,10 @@
 	var selectWords = function(max) {
 		if(!max || isNaN(max) || max < 1) max = 1;
 		var howMany = Math.ceil(Math.random() * max);
+		var listLength = wordsList.length;
 		var words = [];
 		for(var i = 0; i < howMany; i++) {
-			var r = Math.floor(Math.random() * wordsList.length);
+			var r = Math.floor(Math.random() * listLength);
 			words.push(wordsList[r]);
 		}
 		return words;
