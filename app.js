@@ -142,7 +142,7 @@
 	 * Build and fire request to the Spotify Web API
 	*/
 	var doSearch = function(options, callback) {
-		var words = selectWords(options.maxWords);
+		var words = (options.words) ? options.words : selectWords(options.maxWords);
 		var offset = Math.ceil(Math.random() * options.maxOffset);
 		var url = 'https://api.spotify.com/v1/search?type=track&limit=1&offset=' + offset + '&q=' + words.join('%20');
 		$.getJSON(url, callback);
@@ -157,6 +157,7 @@
 			options = {};
 		}
 		options = $.extend(defaultOptions, options);
+		options.words = selectWords(options.maxWords);
 		doSearch(options, function(response) {
 			if(response.tracks.total === 0 || response.tracks.items.length === 0) return $.getRandomSong(options, callback);
 			return callback(response.tracks.items[0]);
